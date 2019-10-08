@@ -506,12 +506,16 @@ public class ofxARCoreLib extends OFAndroidObject {
                 CameraCharacteristics characteristics = cManager.getCameraCharacteristics(cameraId);
                 int cOrientation = characteristics.get(CameraCharacteristics.LENS_FACING);
                 if (cOrientation == CameraCharacteristics.LENS_FACING_BACK) {
+
                     float[] maxFocus = characteristics.get(CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS);
                     SizeF size = characteristics.get(CameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE);
+
                     float w = size.getWidth();
                     float h = size.getHeight();
-                    horizontalAngle = -w/(maxFocus[0]*2);
-                    verticalAngle = (float) (2*Math.atan(h/(maxFocus[0]*2)));
+
+                    horizontalAngle = (float) Math.toDegrees(2 * Math.atan(w / (maxFocus[0] * 2.0)));
+                    verticalAngle = (float) Math.toDegrees(2 * Math.atan(h / (maxFocus[0] * 2.0)));
+
                     return;
                 }
             }
